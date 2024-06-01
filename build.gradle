@@ -1,0 +1,29 @@
+
+plugins {
+    id 'application'
+}
+
+group = 'ru.denisovmaksim'
+version = '1.0-SNAPSHOT'
+description = 'procheckreport'
+java.sourceCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor(
+            'org.projectlombok:lombok:1.18.26',
+    )
+    implementation 'info.picocli:picocli:4.7.6'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'ru.denisovmaksim.procheckreport.App'
+}
+
