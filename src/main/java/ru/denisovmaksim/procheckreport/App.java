@@ -9,6 +9,10 @@ import java.util.concurrent.Callable;
 public class App implements Callable {
     @CommandLine.Option(names = {"-f", "--file"}, paramLabel = "file", description = "input file [default: procheck.json]")
     private String jsonFile = "./procheck.json";
+
+    @CommandLine.Option(names = {"-c", "--contains"}, paramLabel = "contains", description = "Contains sequence [default: all entries]")
+    private String contains = "";
+
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
@@ -17,7 +21,7 @@ public class App implements Callable {
     @Override
     public Integer call() throws Exception {
         try {
-            String report = Formatter.format(Accumulator.getReport(jsonFile));
+            String report = Formatter.format(Accumulator.getReport(jsonFile, contains));
             System.out.println(report);;
             return 0;
         } catch (Exception e) {

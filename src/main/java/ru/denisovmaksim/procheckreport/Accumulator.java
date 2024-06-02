@@ -21,7 +21,7 @@ public class Accumulator {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public static List<Check> getReport(String jsonPath) throws IOException {
+    public static List<Check> getReport(String jsonPath, String contains) throws IOException {
         List<Check> list = mapper.readValue(Files.readString(Paths.get(jsonPath).normalize()), new TypeReference<>() {
         });
         Map<String, List<Check>> map = list.stream()
@@ -33,6 +33,7 @@ public class Accumulator {
             result.add(new Check(entry.getKey(), quantity, sum));
         }
         return result.stream()
+                .filter(check -> check.getName().toLowerCase().contains(contains.toLowerCase()))
                 .sorted(Comparator.comparing(Check::getName))
                 .collect(Collectors.toList());
     }
